@@ -3,11 +3,10 @@ import java.util.Scanner;
 
 public class salaCinema {
 
-     private final HashSet<Utente> listaPrenotazioni;
+    private final HashSet<Utente> listaPrenotazioni;
     int postiLiberi = 10;
-     private boolean statoMenu = false;
     private final String film = "Interstellar";
-
+    boolean statoMenu = false;
     public String getFilm(){
         return film;
      }
@@ -79,12 +78,18 @@ public class salaCinema {
                         }
                         break;
                     case 4:
-                        System.out.println("Arrivederci");
+                        if (this.listaPrenotazioni.contains(utente)) {
+                            System.out.println("Arrivederci, grazie per aver prenotato");
+                        }else{
+                            System.out.println("Arrivederci");
+                        }
                         System.out.println("EXIT MENU");
                         System.exit(0);
                         break;
                     case 5 :
                         System.out.println("Il film in proiezione è: " +this.getFilm());
+                        System.out.println("--------------------------");
+
                         break;
                     default:
                         System.out.println("Comando non valido");
