@@ -1,53 +1,65 @@
 
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Utente {
 
 
-    private String nome;
-    private String cognome;
+    private String name;
+    private String surname;
 
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String name) {
-        this.nome = name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCognome() {
-        return cognome;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public Utente(){
-        System.out.println("Inserire i propri dati");
+    public Utente() {
         System.out.println("NOME: ");
-      try {
-          Scanner input = new Scanner(System.in);
-          nome = input.nextLine();
-          System.out.println("COGNOME:");
-          this.setNome(nome);
-          cognome = input.nextLine();
-          this.setCognome(cognome);
-      }catch(InputMismatchException e){
-          System.out.println("Sono ammessi solo nome e cognome");
-      }
-        System.out.println("Benvenuto/a signor/a " + this.nome + " " + this.cognome);
-        System.out.println("--------------------------");
+        Scanner input = new Scanner(System.in);
+        name = input.nextLine();
+        while (sonoLettere(name) == false) {
+            System.out.println("NOME: ");
+            name = input.nextLine();
+        }
+        this.setName(name);
+        System.out.println("COGNOME:");
+          surname = input.nextLine();
+        while (sonoLettere(surname) == false) {
+            System.out.println("COGNOME: ");
+            surname = input.nextLine();
+        }
+          this.setSurname(surname);
+          System.out.println("--------------------------");
+    }
+
+    public boolean sonoLettere(String name) {
+        char[] ch = name.toCharArray();
+        for (char c : ch) {
+            if(!Character.isLetter(c)) {
+                System.out.println("Non hai inserito un nome o cognome valido");
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         return "Utente{" +
-                "nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
+                "nome='" + name + '\'' +
+                ", cognome='" + surname + '\'' +
                 '}';
     }
 }

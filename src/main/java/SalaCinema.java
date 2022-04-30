@@ -1,18 +1,26 @@
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class salaCinema {
-
+public class SalaCinema {
+    private final String nomeSala;
     private final HashSet<Utente> listaPrenotazioni;
     int postiLiberi = 10;
-    private final String film = "Interstellar";
+
+
+
+    private String film;
     boolean statoMenu = false;
     public String getFilm(){
         return film;
      }
+    public void setFilm(String film) {
+        this.film = film;   }
 
 
-    public salaCinema(){
+
+    public SalaCinema(String nomeSala, String film ){
+        this.nomeSala = nomeSala;
+        this.film = film;
         listaPrenotazioni = new HashSet<>();
 
     }
@@ -20,7 +28,7 @@ public class salaCinema {
         if (postiLiberi >= 1) {
             listaPrenotazioni.add(utente);
             postiLiberi--;
-            System.out.println("Signor/a " + utente.getCognome() + " " + utente.getNome() + " la sua prenotazione è andata a buon fine");
+            System.out.println("Signor/a " + utente.getSurname() + " " + utente.getName() + " la sua prenotazione è andata a buon fine");
             System.out.println("--------------------------");
 
         }
@@ -38,6 +46,7 @@ public class salaCinema {
 
 
     public  void mostraPrenotazioni() {
+        System.out.println("Ecco la lista di prenotazione per la " + this.nomeSala);
         if(!listaPrenotazioni.isEmpty())
             listaPrenotazioni.forEach(System.out::println);
     }
@@ -45,13 +54,17 @@ public class salaCinema {
 
     public void inizializzaMenu() {
         statoMenu = true;
+        System.out.println("Benvenuto nel menu della " + this.nomeSala);
+        System.out.println("Inserire i propri dati");
         Utente utente = new Utente();
         try {
             while (statoMenu) {
-                System.out.println("Benvenuto/a " + utente.getNome() + ", selezioni l'azione da compiere:");
+                System.out.println("Benvenuto/a " + utente.getName() + " " + utente.getSurname() +  ", selezioni l'azione da compiere:");
                 System.out.println("-1 per verificare i posti        -2 per prenotare");
                 System.out.println("-3 per annullare prenotazione    -4 per uscire");
                 System.out.println("-5 per vedere quale film verrà proiettato");
+                System.out.println("-6 per prenotare un altro posto ");
+
                 Scanner input = new Scanner(System.in);
                 int selezione = Integer.parseInt(input.nextLine());
                 switch (selezione) {
@@ -84,12 +97,14 @@ public class salaCinema {
                             System.out.println("Arrivederci");
                         }
                         System.out.println("EXIT MENU");
-                        System.exit(0);
+                      //  System.exit(0);
+                        statoMenu = false;
                         break;
                     case 5 :
                         System.out.println("Il film in proiezione è: " +this.getFilm());
                         System.out.println("--------------------------");
-
+                        break;
+                    case 6 : inizializzaMenu();
                         break;
                     default:
                         System.out.println("Comando non valido");
@@ -100,8 +115,10 @@ public class salaCinema {
         } catch (NumberFormatException e) {
             System.out.println("Comando non valido");
             System.out.println("--------------------------");
+
         }
     }
+
 
 
     @Override
