@@ -29,14 +29,14 @@ public class Utente {
         System.out.println("NOME: ");
         Scanner input = new Scanner(System.in);
         name = input.nextLine();
-        while (sonoLettere(name) == false) {
+        while (!isLetters(name) || !isEmpty(name)) {
             System.out.println("NOME: ");
             name = input.nextLine();
         }
         this.setName(name);
         System.out.println("COGNOME:");
           surname = input.nextLine();
-        while (sonoLettere(surname) == false) {
+        while (!isLetters(surname) || !isEmpty(surname)) {
             System.out.println("COGNOME: ");
             surname = input.nextLine();
         }
@@ -44,7 +44,7 @@ public class Utente {
           System.out.println("--------------------------");
     }
 
-    public boolean sonoLettere(String name) {
+    public boolean isLetters(String name) {
         char[] ch = name.toCharArray();
         for (char c : ch) {
             if(!Character.isLetter(c)) {
@@ -55,11 +55,19 @@ public class Utente {
         return true;
     }
 
+    public boolean isEmpty(String name) {
+        while (name.length() == 0) {
+            System.out.println("Non hai inserito un nome o cognome valido");
+            return false;
+        }
+        return true;
+    }
+
+
     @Override
     public String toString() {
-        return "Utente{" +
-                "nome='" + name + '\'' +
-                ", cognome='" + surname + '\'' +
-                '}';
+        return "Utente prenotato: " + name + " " + surname;
     }
 }
+
+

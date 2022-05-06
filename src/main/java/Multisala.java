@@ -1,22 +1,30 @@
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Multisala {
 
     private static Multisala cinema;
-    private static List<SalaCinema> salaCinema;
-
-
-
     private static final String name = "Cinema Paradiso";
+    private static Map<Manager, SalaCinema> listaSaleManager;
+    public static boolean statoMenu = false;
+
+
+
+    public static Map<Manager, SalaCinema> getListaSaleManager() {
+        return listaSaleManager;
+    }
+
 
     public String getName(){
      return name;
     }
 
 
+
     private Multisala(){
-        salaCinema = new ArrayList<>();
+        listaSaleManager = new LinkedHashMap<>();
     }
 
 
@@ -24,16 +32,108 @@ public class Multisala {
     public static Multisala getInstance(){
         if(cinema == null){
             cinema = new Multisala();
-        }return cinema;
+        }
+        return cinema;
+    }
+
+    public static void associaManager(Manager manager, SalaCinema salaCinema){
+        listaSaleManager.put(manager, salaCinema);
+        manager.setSalaCinema(salaCinema);
     }
 
 
-    public static void aggiungiSala (SalaCinema salaCinema){
-        Multisala.getInstance().salaCinema.add(salaCinema);
+
+
+
+    public static void mostraSale() {
+        System.out.println("--------------------------");
+
+        System.out.println("Le sale aperte sono:");
+        if (!listaSaleManager.isEmpty()) {
+            listaSaleManager.forEach((manager, salaCinema) ->
+                System.out.println(salaCinema + " | Film: " + salaCinema.getFilm() + "                 - Manager: " + manager));
+
+        } else {
+            System.out.println("--------------------------");
+
+            System.out.println("Non c'è nessuna sala aperta");
+        }
+        System.out.println("--------------------------");
+
     }
+
+
+
+
+
+    public static void mostraTutteLePrenotazioni(){
+        System.out.println("--------------------------");
+        System.out.println("Ecco la lista delle prenotazioni per tutte le sale:");
+        if (!listaSaleManager.isEmpty()) {
+            listaSaleManager.forEach((manager, salaCinema) ->
+             salaCinema.mostraPrenotazioniSala());
+        }
+        System.out.println("--------------------------");
+    }
+
+
+
+
+
+
+
+    public static void menuIniziale() {
+        statoMenu = true;
+        Multisala.getInstance().mostraSale();
+        while (statoMenu) {
+            System.out.println("Benvenuto/a, a quale sala vuole accedere?");
+            int risposta;
+            Scanner input = new Scanner(System.in);
+            risposta = input.nextInt();
+            switch (risposta) {
+                case 1 -> {
+                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 1")) {
+                            singleManager.inizializzaMenu();
+                        }
+                    });
+                    Multisala.getInstance().menuIniziale();
+                }
+                case 2 -> {
+                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 2")) {
+                            singleManager.inizializzaMenu();
+                        }
+                    });
+                    Multisala.getInstance().menuIniziale();
+                }
+                case 3 -> {
+                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 3")) {
+                            singleManager.inizializzaMenu();
+                        }
+                    });
+                    Multisala.getInstance().menuIniziale();
+                }
+                case 4 -> {
+                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 4")) {
+                            singleManager.inizializzaMenu();
+                        }
+                    });
+                    Multisala.getInstance().menuIniziale();
+                }
+                case 0 -> statoMenu = false;
+                default -> System.out.println("inserisci un comando tra quelli elencati");
+            }
+
+        }
+        Multisala.getInstance().mostraTutteLePrenotazioni();
+    }
+
 
     @Override
     public String toString() {
-        return super.toString();
+        return " Cinema" + cinema.getName() + '\'' + Multisala.getInstance().listaSaleManager;
     }
 }
