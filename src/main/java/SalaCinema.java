@@ -57,9 +57,10 @@ public class SalaCinema  {
         System.out.println("Ecco la lista di prenotazione per la " + this.getNomeSala() + "|| Film: " + this.getFilm());
         if (!this.getListaPrenotazioni().isEmpty()) {
             this.getListaPrenotazioni().forEach(System.out::println);
+
         } else {
             System.out.println("Non c'è nessuna prenotazione");
-        }
+        } System.out.println("----------------------------------");
     }
 
 

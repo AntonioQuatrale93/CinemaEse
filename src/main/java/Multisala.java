@@ -87,6 +87,9 @@ public class Multisala {
         Multisala.getInstance().mostraSale();
         while (statoMenu) {
             System.out.println("Benvenuto/a, a quale sala vuole accedere?");
+            System.out.println(" 1- Sala 1        2- Sala 2");
+            System.out.println(" 3- Sala 3        4- Sala 4");
+            System.out.println("0 per uscire");
             int risposta;
             Scanner input = new Scanner(System.in);
             risposta = input.nextInt();
