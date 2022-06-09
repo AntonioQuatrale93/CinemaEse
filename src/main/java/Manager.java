@@ -4,7 +4,7 @@ public class Manager {
     private final String nome;
     private final String cognome;
     private SalaCinema salaCinema;
-
+    MySqlAccess mySqlAccess = new MySqlAccess();
 
 
 
@@ -48,14 +48,16 @@ public class Manager {
         }
     }
         */
-    public void inizializzaMenu() {
+    public void inizializzaMenu() throws Exception {
         this.salaCinema.setStatoMenu(true);
         System.out.println("Benvenuto nel menu della " + this.salaCinema.getNomeSala());
         System.out.println("Inserire i propri dati");
         Utente utente = new Utente();
+
         try {
             while (this.salaCinema.getStatoMenu()) {
-                System.out.println("Benvenuto/a " + utente.getName() + " " + utente.getSurname() +  ", selezioni l'azione da compiere:");
+
+                System.out.println("Benvenuto/a,  seleziona l'azione da compiere:");
                 System.out.println("-1 per verificare i posti        -2 per prenotare");
                 System.out.println("-3 per annullare prenotazione    -4 per uscire");
                 System.out.println("-5 per vedere quale film verrà proiettato");
@@ -69,6 +71,10 @@ public class Manager {
                         System.out.println("--------------------------");
                         break;
                     case 2:
+
+                        mySqlAccess.connectToDB();
+                        mySqlAccess.checkIfIsFree(this.salaCinema.getNomeSala());
+                        mySqlAccess.putIntoDb(utente, salaCinema.getNomeSala() );
                         if (this.salaCinema.getListaPrenotazioni().contains(utente)) {
                             System.out.println("Hai già prenotato");
                             System.out.println("--------------------------");
@@ -77,11 +83,16 @@ public class Manager {
                         }
                         break;
                     case 3:
+                         mySqlAccess = new MySqlAccess();
+                         mySqlAccess.connectToDB();
+
                         if (this.salaCinema.getListaPrenotazioni().contains(utente)) {
                             this.annullaPrenotazione(utente);
+                            mySqlAccess.removeFromDb(utente, this.salaCinema.getNomeSala());
                             System.out.println("Hai annullato la tua prenotazione");
                             System.out.println("--------------------------");
                         } else {
+                            mySqlAccess.removeFromDb(utente, this.salaCinema.getNomeSala());
                             System.out.println("Non hai una prenotazione da annullare");
                             System.out.println("--------------------------");
                         }

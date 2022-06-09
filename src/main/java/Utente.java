@@ -1,13 +1,26 @@
 
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Utente {
 
 
     private String name;
     private String surname;
+    private String id;
+    public String getId() {
+        return id;
+    }
 
+
+
+    public int getEtà() {
+        return età;
+    }
+
+    private int età;
+    MySqlAccess mySqlAccess = new MySqlAccess();
 
     public String getName() {
         return name;
@@ -25,10 +38,11 @@ public class Utente {
         this.surname = surname;
     }
 
-    public Utente() {
+    public Utente() throws Exception {
         System.out.println("NOME: ");
         Scanner input = new Scanner(System.in);
         name = input.nextLine();
+        name.trim();
         while (!isLetters(name) || !isEmpty(name)) {
             System.out.println("NOME: ");
             name = input.nextLine();
@@ -36,12 +50,18 @@ public class Utente {
         this.setName(name);
         System.out.println("COGNOME:");
           surname = input.nextLine();
+          surname.trim();
         while (!isLetters(surname) || !isEmpty(surname)) {
             System.out.println("COGNOME: ");
             surname = input.nextLine();
         }
           this.setSurname(surname);
+        System.out.println("ETA: ");
+         input = new Scanner(System.in);
+        this.età = input.nextInt();
           System.out.println("--------------------------");
+          this.id = UUID.randomUUID().toString();
+
     }
 
     public boolean isLetters(String name) {

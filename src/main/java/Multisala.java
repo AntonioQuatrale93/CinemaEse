@@ -9,6 +9,7 @@ public class Multisala {
     private static final String name = "Cinema Paradiso";
     private static Map<Manager, SalaCinema> listaSaleManager;
     public static boolean statoMenu = false;
+    MySqlAccess mySqlAccess = new MySqlAccess();
 
 
 
@@ -51,7 +52,7 @@ public class Multisala {
         System.out.println("Le sale aperte sono:");
         if (!listaSaleManager.isEmpty()) {
             listaSaleManager.forEach((manager, salaCinema) ->
-                System.out.println(salaCinema + " | Film: " + salaCinema.getFilm() + "                 - Manager: " + manager));
+                System.out.println(salaCinema + " | Film: " + salaCinema.getFilm()));
 
         } else {
             System.out.println("--------------------------");
@@ -93,46 +94,67 @@ public class Multisala {
             int risposta;
             Scanner input = new Scanner(System.in);
             risposta = input.nextInt();
-            switch (risposta) {
-                case 1 -> {
-                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
-                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 1")) {
-                            singleManager.inizializzaMenu();
-                        }
-                    });
-                    Multisala.getInstance().menuIniziale();
-                }
-                case 2 -> {
-                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
-                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 2")) {
-                            singleManager.inizializzaMenu();
-                        }
-                    });
-                    Multisala.getInstance().menuIniziale();
-                }
-                case 3 -> {
-                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
-                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 3")) {
-                            singleManager.inizializzaMenu();
-                        }
-                    });
-                    Multisala.getInstance().menuIniziale();
-                }
-                case 4 -> {
-                    Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
-                        if (singleManager.getSalaCinema().getNomeSala().equals("Sala 4")) {
-                            singleManager.inizializzaMenu();
-                        }
-                    });
-                    Multisala.getInstance().menuIniziale();
-                }
-                case 0 -> statoMenu = false;
-                default -> System.out.println("inserisci un comando tra quelli elencati");
-            }
 
+            switch (risposta) {
+                    case 1 -> {
+
+                        Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                            if (singleManager.getSalaCinema().getNomeSala().equals("sala1")) {
+                                try {
+
+                                    singleManager.inizializzaMenu();
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                        Multisala.getInstance().menuIniziale();
+                    }
+                    case 2 -> {
+                        Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                            if (singleManager.getSalaCinema().getNomeSala().equals("sala2")) {
+                                try {
+                                    singleManager.inizializzaMenu();
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                        Multisala.getInstance().menuIniziale();
+                    }
+                    case 3 -> {
+                        Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                            if (singleManager.getSalaCinema().getNomeSala().equals("sala3")) {
+                                try {
+                                    singleManager.inizializzaMenu();
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                        Multisala.getInstance().menuIniziale();
+                    }
+                    case 4 -> {
+                        Multisala.getInstance().getListaSaleManager().forEach((singleManager, singleSalaCinema) -> {
+                            if (singleManager.getSalaCinema().getNomeSala().equals("sala4")) {
+                                try {
+                                    singleManager.inizializzaMenu();
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                        Multisala.getInstance().menuIniziale();
+                    }
+                    case 0 -> statoMenu = false;
+                    default -> System.out.println("inserisci un comando tra quelli elencati");
+                }
+
+
+            }
+            Multisala.getInstance().mostraTutteLePrenotazioni();
         }
-        Multisala.getInstance().mostraTutteLePrenotazioni();
-    }
+
 
 
     @Override

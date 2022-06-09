@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.HashSet;
 
 public class SalaCinema  {
@@ -7,7 +8,7 @@ public class SalaCinema  {
 
     private final String nomeSala;
     private final HashSet<Utente> listaPrenotazioni;
-    private int postiLiberi = 10;
+    private int postiLiberi;
     private String film;
     private boolean statoMenu = false;
 
@@ -15,6 +16,11 @@ public class SalaCinema  {
         this.statoMenu = statoMenu;
     }
 
+    MySqlAccess mySqlAccess = new MySqlAccess();
+
+    public void setPostiLiberi() throws SQLException {
+        this.postiLiberi = mySqlAccess.checkIfIsFree(this.getNomeSala());
+    }
 
     public int getPostiLiberi() {
         return postiLiberi;
@@ -47,11 +53,12 @@ public class SalaCinema  {
 
 
 
-    public SalaCinema(String nomeSala, String film ){
+    public SalaCinema(String nomeSala, String film ) throws Exception {
         this.nomeSala = nomeSala;
         this.film = film;
         listaPrenotazioni = new HashSet<>();
-
+        mySqlAccess.connectToDB();
+        this.postiLiberi = mySqlAccess.checkIfIsFree(this.getNomeSala());
     }
     public void mostraPrenotazioniSala() {
         System.out.println("Ecco la lista di prenotazione per la " + this.getNomeSala() + "|| Film: " + this.getFilm());
