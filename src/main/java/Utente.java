@@ -8,19 +8,20 @@ public class Utente {
 
     private String name;
     private String surname;
-    private String id;
+    private final String id;
+    private final int age;
     public String getId() {
         return id;
     }
 
 
 
-    public int getEtà() {
-        return età;
+    public int getAge() {
+        return age;
     }
 
-    private int età;
-    MySqlAccess mySqlAccess = new MySqlAccess();
+
+
 
     public String getName() {
         return name;
@@ -38,7 +39,7 @@ public class Utente {
         this.surname = surname;
     }
 
-    public Utente() throws Exception {
+    public Utente() {
         System.out.println("NOME: ");
         Scanner input = new Scanner(System.in);
         name = input.nextLine();
@@ -50,7 +51,7 @@ public class Utente {
         this.setName(name);
         System.out.println("COGNOME:");
           surname = input.nextLine();
-          surname.trim();
+
         while (!isLetters(surname) || !isEmpty(surname)) {
             System.out.println("COGNOME: ");
             surname = input.nextLine();
@@ -58,7 +59,7 @@ public class Utente {
           this.setSurname(surname);
         System.out.println("ETA: ");
          input = new Scanner(System.in);
-        this.età = input.nextInt();
+        this.age = input.nextInt();
           System.out.println("--------------------------");
           this.id = UUID.randomUUID().toString();
 
@@ -76,7 +77,7 @@ public class Utente {
     }
 
     public boolean isEmpty(String name) {
-        while (name.length() == 0) {
+        if (name.length() == 0) {
             System.out.println("Non hai inserito un nome o cognome valido");
             return false;
         }

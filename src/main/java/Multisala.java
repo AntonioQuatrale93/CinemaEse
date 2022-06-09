@@ -9,7 +9,7 @@ public class Multisala {
     private static final String name = "Cinema Paradiso";
     private static Map<Manager, SalaCinema> listaSaleManager;
     public static boolean statoMenu = false;
-    MySqlAccess mySqlAccess = new MySqlAccess();
+
 
 
 

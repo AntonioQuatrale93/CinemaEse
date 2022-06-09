@@ -24,7 +24,6 @@ public class Manager {
     public void prenota(Utente utente) {
         if (this.salaCinema.getPostiLiberi() >= 1) {
             this.salaCinema.getListaPrenotazioni().add(utente);
-            this.salaCinema.getDecreasePostiLiberi();
             System.out.println("Signor/a " + utente.getSurname() + " " + utente.getName() + " la sua prenotazione è andata a buon fine");
             System.out.println("--------------------------");
         }else{
@@ -35,19 +34,10 @@ public class Manager {
 
     public void annullaPrenotazione (Utente utente){
         this.salaCinema.getListaPrenotazioni().remove(utente);
-        this.salaCinema.getIncreasePostiLiberi();
+
     }
 
-        /*
-    public void mostraPrenotazioni() {
-        System.out.println("Ecco la lista di prenotazione per la " + this.salaCinema.getNomeSala() + ":");
-        if (!this.salaCinema.getListaPrenotazioni().isEmpty()) {
-            this.salaCinema.getListaPrenotazioni().forEach(System.out::println);
-        } else {
-            System.out.println("Non c'è nessuna prenotazione");
-        }
-    }
-        */
+
     public void inizializzaMenu() throws Exception {
         this.salaCinema.setStatoMenu(true);
         System.out.println("Benvenuto nel menu della " + this.salaCinema.getNomeSala());
@@ -66,26 +56,24 @@ public class Manager {
                 Scanner input = new Scanner(System.in);
                 int selezione = Integer.parseInt(input.nextLine());
                 switch (selezione) {
-                    case 1:
+                    case 1 -> {
                         System.out.println("Ci sono " + this.salaCinema.getPostiLiberi() + " posti liberi");
                         System.out.println("--------------------------");
-                        break;
-                    case 2:
-
+                    }
+                    case 2 -> {
                         mySqlAccess.connectToDB();
                         mySqlAccess.checkIfIsFree(this.salaCinema.getNomeSala());
-                        mySqlAccess.putIntoDb(utente, salaCinema.getNomeSala() );
+                        mySqlAccess.putIntoDb(utente, salaCinema.getNomeSala());
                         if (this.salaCinema.getListaPrenotazioni().contains(utente)) {
                             System.out.println("Hai già prenotato");
                             System.out.println("--------------------------");
                         } else {
                             this.prenota(utente);
                         }
-                        break;
-                    case 3:
-                         mySqlAccess = new MySqlAccess();
-                         mySqlAccess.connectToDB();
-
+                    }
+                    case 3 -> {
+                        mySqlAccess = new MySqlAccess();
+                        mySqlAccess.connectToDB();
                         if (this.salaCinema.getListaPrenotazioni().contains(utente)) {
                             this.annullaPrenotazione(utente);
                             mySqlAccess.removeFromDb(utente, this.salaCinema.getNomeSala());
@@ -96,26 +84,25 @@ public class Manager {
                             System.out.println("Non hai una prenotazione da annullare");
                             System.out.println("--------------------------");
                         }
-                        break;
-                    case 4:
+                    }
+                    case 4 -> {
                         if (this.salaCinema.getListaPrenotazioni().contains(utente)) {
                             System.out.println("Arrivederci, grazie per aver prenotato");
-                        }else{
+                        } else {
                             System.out.println("Arrivederci");
                         }
                         System.out.println("EXIT MENU");
                         this.salaCinema.setStatoMenu(false);
-                        break;
-                    case 5 :
-                        System.out.println("Il film in proiezione è: " +this.salaCinema.getFilm());
+                    }
+                    case 5 -> {
+                        System.out.println("Il film in proiezione è: " + this.salaCinema.getFilm());
                         System.out.println("--------------------------");
-                        break;
-                    case 6 : inizializzaMenu();
-                        break;
-                    default:
+                    }
+                    case 6 -> inizializzaMenu();
+                    default -> {
                         System.out.println("Comando non valido");
                         System.out.println("--------------------------");
-                        break;
+                    }
                 }
             }
         } catch (NumberFormatException e) {

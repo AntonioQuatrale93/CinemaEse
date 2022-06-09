@@ -1,4 +1,3 @@
-import java.sql.SQLException;
 import java.util.HashSet;
 
 public class SalaCinema  {
@@ -18,20 +17,11 @@ public class SalaCinema  {
 
     MySqlAccess mySqlAccess = new MySqlAccess();
 
-    public void setPostiLiberi() throws SQLException {
-        this.postiLiberi = mySqlAccess.checkIfIsFree(this.getNomeSala());
-    }
+
 
     public int getPostiLiberi() {
         return postiLiberi;
     }
-    public int getIncreasePostiLiberi() {
-        return postiLiberi++;
-    }
-    public int getDecreasePostiLiberi() {
-        return postiLiberi--;
-    }
-
 
 
     public boolean getStatoMenu() {
