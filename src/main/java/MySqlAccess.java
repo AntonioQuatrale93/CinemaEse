@@ -34,7 +34,6 @@ public class MySqlAccess {
         preparedStatement.setString(1, utente.getName());
         preparedStatement.setString(2, utente.getSurname());
         preparedStatement.setInt(3, utente.getAge());
-        preparedStatement.setString(4, utente.getId());
         preparedStatement.executeUpdate();
 
     }
