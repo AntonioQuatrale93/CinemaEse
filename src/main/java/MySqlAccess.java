@@ -1,3 +1,4 @@
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
 
@@ -28,11 +29,12 @@ public class MySqlAccess {
         preparedStatement.executeUpdate();
     }
 
-    public void removeFromDb(Utente utente, String nomeCinema) throws SQLException {
+    public void removeFromDb(@NotNull Utente utente, String nomeCinema) throws SQLException {
         preparedStatement = connection.prepareStatement("delete from datacinema." + nomeCinema + " where name = ? and surname = ? and age = ?");
         preparedStatement.setString(1, utente.getName());
         preparedStatement.setString(2, utente.getSurname());
         preparedStatement.setInt(3, utente.getAge());
+        preparedStatement.setString(4, utente.getId());
         preparedStatement.executeUpdate();
 
     }
